@@ -1,16 +1,18 @@
 package quicksort
 
-func Quicksort(items QuickSortType) {
+import "cmp"
+
+func Quicksort[N cmp.Ordered](a []N) {
   partition := func(start int, stop int) int {
     j := start
     for i := start; i < stop; i++ {
-      if items.LessThan(i, stop) {
-        items.Swap(i, j)
+      if a[i] < a[stop] {
+        a[i], a[j] = a[j], a[i]
         j++
       }
     }
     
-    items.Swap(j, stop)
+    a[j], a[stop] = a[stop], a[j]
     return j
   }
 
@@ -25,5 +27,5 @@ func Quicksort(items QuickSortType) {
     helper(pivot + 1, stop)
   }
 
-  helper(0, items.Size() - 1)
+  helper(0, len(a) - 1)
 }
